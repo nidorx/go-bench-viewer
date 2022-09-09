@@ -7,7 +7,7 @@
     <meta name="description" content="Free Web tutorials">
     <meta name="keywords" content="golang, benchmark">
     <meta name="author" content="nidorx - Alex Rodin">
-    <meta name="copyright" content="Copyright (c) 2022 Alex Rodin" />
+    <meta name="copyright" content="Copyright (c) 2022 Alex Rodin"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -85,19 +85,19 @@ NO NEED TO CHANGE FROM HERE DOWN
                 <th style="text-align: center">#</th>
                 <th>Name</th>
                 <th data-sort="Iterations" title="Higher is better" style="text-align: center">
-                    Total Operations
+                    Iterations
                 </th>
                 <th data-sort="NsPerOp" title="Lower is better" style="text-align: center">
-                    Avg. Time per repetition (ns/op)
+                    Time (ns/op)
                 </th>
                 <th data-sort="MbPerSec" title="Lower is better" style="text-align: center">
-                    Avg. MB/s
+                    Throughput (MB/s)
                 </th>
                 <th data-sort="AllocedBytesPerOp" title="Lower is better" style="text-align: center">
-                    Avg. Memory per repetition (B/op)
+                    Memory (B/op)
                 </th>
                 <th data-sort="AllocsPerOp" title="Lower is better" style="text-align: center">
-                    Avg. Allocations per repetition (allocs/op)
+                    Allocations (allocs/op)
                 </th>
                 <th style="text-align: center"></th>
             </tr>
@@ -110,12 +110,13 @@ NO NEED TO CHANGE FROM HERE DOWN
     <div class="container">
         <p>If you are unfamiliar with the <code>go test -bench</code> tool:</p>
         <ul>
-            <li>The first number is the number of repetitions the <code>go test</code> tool made, to get a test running
-                long
-                enough for measurements.
+            <li>
+                The first number is the number of iterations. This number represents the number of time the for loop
+                has run to obtain the statistics.
             </li>
-            <li>The second column shows the time in nanoseconds that a single repetition takes.</li>
-            <li>The third number is the amount of heap memory allocated in bytes</li>
+            <li>The second column shows the average time in nanoseconds that a single repetition takes.</li>
+            <li>The third column shows the average total of bytes processed in one iteration.</li>
+            <li>The fourth number is the amount of heap memory allocated in bytes</li>
             <li>The last one the average number of allocations made per repetition.</li>
         </ul>
     </div>
@@ -277,9 +278,9 @@ BenchmarkUnmarshalByThriftIteratorDecoder-12             6360967               9
         </div>
     </div>
 </div>
-
-
 <script>
+
+
     const COLORS = [
         {pct: 0.0, color: {r: 0xdd, g: 0x95, b: 0xa2}}, // #DD95A2
         {pct: 0.5, color: {r: 0xef, g: 0xd8, b: 0x96}}, // #EFD896
@@ -403,7 +404,7 @@ BenchmarkUnmarshalByThriftIteratorDecoder-12             6360967               9
             if (entry.MbPerSec === undefined) {
                 tr.push(`<td><div class="progress disabled"><div class="bar">-</div></div></td>`)
             } else {
-                tr.push(`${style(entry.MbPerSec, max.MbPerSec, true)}>${entry.MbPerSec.toFixed(2)}</div></div></td>`)
+                tr.push(`${style(entry.MbPerSec, max.MbPerSec)}>${entry.MbPerSec.toFixed(2)}</div></div></td>`)
             }
 
             if (entry.AllocedBytesPerOp === undefined) {
@@ -666,6 +667,10 @@ BenchmarkUnmarshalByThriftIteratorDecoder-12             6360967               9
         box-sizing: border-box;
     }
 
+    html, body {
+        overflow-x: hidden;
+    }
+
     html {
         display: block;
     }
@@ -686,9 +691,9 @@ BenchmarkUnmarshalByThriftIteratorDecoder-12             6360967               9
 
     .container {
         flex: 1;
-        margin: 0 auto;
         max-width: 55rem;
-        min-width: 55rem;
+        /*min-width: 55rem;*/
+        padding: 0 5px;
     }
 
     #footer {
@@ -713,8 +718,9 @@ BenchmarkUnmarshalByThriftIteratorDecoder-12             6360967               9
     }
 
     #git-link {
-        opacity: 0.4;
+        opacity: 0.5;
         margin-left: 90px;
+        display: block;
     }
 
     #git-link a {
@@ -729,13 +735,17 @@ BenchmarkUnmarshalByThriftIteratorDecoder-12             6360967               9
 
     h1 {
         margin-bottom: 0;
+        font-size: 24px;
     }
 
     table {
         background-color: transparent;
         border-spacing: 0;
         border: 1px solid #e9ecef;
+        display: block;
+        margin: 0 auto;
     }
+
 
     table thead th {
         border-bottom: 2px solid #dee2e6;
@@ -820,6 +830,16 @@ BenchmarkUnmarshalByThriftIteratorDecoder-12             6360967               9
         opacity: 0.1;
     }
 
+    @media (max-width: 801px) {
+        table {
+            overflow-x: auto;
+            padding-right: 20px;
+        }
+
+        td:not(:last-child) {
+            min-width: 110px;
+        }
+    }
 
     .progress {
         display: flex;
@@ -868,7 +888,6 @@ BenchmarkUnmarshalByThriftIteratorDecoder-12             6360967               9
 
     #metadata li strong {
         display: inline-block;
-        width: 180px;
         text-align: right;
         padding-right: 5px;
         font-style: normal;
@@ -881,34 +900,28 @@ BenchmarkUnmarshalByThriftIteratorDecoder-12             6360967               9
         border-bottom: 1px solid #000;
     }
 
+    textarea, input {
+        border-radius: 2px 2px 0 0;
+        border: 1px solid #ccc;
+        width: 100%;
+        padding: 4px;
+        font-family: monospace;
+        font-size: 12px;
+        background: #f8f8f8;
+        line-height: 16px;
+        display: block;
+        flex: 1;
+    }
+
     textarea {
         max-width: 100%;
         min-width: 100%;
-        height: 200px;
-        min-height: 200px;
-        max-height: 200px;
+        height: 300px;
+        min-height: 300px;
+        max-height: 300px;
         resize: none;
-        font-family: monospace;
-        font-size: 12px;
-        background: #f8f8f8;
         width: auto;
-        padding: 0.625rem;
-        border: 1px solid #ccc;
-        border-radius: 0.3125rem 0.3125rem 0 0;
         margin-bottom: 5px;
-    }
-
-    input {
-        display: block;
-        flex: 1;
-        border: 1px solid #ccc;
-        line-height: 1.8em;
-        font-family: monospace;
-        font-size: 12px;
-        background: #f8f8f8;
-        padding: 0.225rem;
-        width: 50%;
-        margin-right: 10px;
     }
 
     input:focus,
@@ -923,6 +936,28 @@ BenchmarkUnmarshalByThriftIteratorDecoder-12             6360967               9
         font-size: 0.8em;
     }
 
+    @media (min-width: 600px) {
+        .container {
+            margin: 0;
+        }
+
+
+    }
+
+    @media (min-width: 801px) {
+        #metadata li strong {
+            width: 180px;
+        }
+
+        .container {
+            margin: 0 auto;
+        }
+    }
 </style>
 </body>
 </html>
+<!--
+    https://beautifytools.com/html-minifier.php
+    https://www.digitalocean.com/community/tools/minify
+    https://www.toptal.com/developers/cssminifier
+-->

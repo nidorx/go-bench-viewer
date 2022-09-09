@@ -20,7 +20,7 @@ It's just a simple `.html` file that does the correct processing and display of 
 
 ## Instructions
 
-1. ![img.png](img.png) **to** <https://nidorx.github.io/go-bench-viewer>
+1. ![docs/go.png](docs/go.png) **to** <https://nidorx.github.io/go-bench-viewer>
 2. Click on some things
 3. Scroll to bottom of page
                 
